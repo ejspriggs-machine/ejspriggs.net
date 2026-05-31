@@ -1,0 +1,5 @@
+{
+  "title": "Project Two",
+  "description": "Placeholder for the second subproject. Each project lives in its own directory and is served at /<slug>/.",
+  "order": 2
+}

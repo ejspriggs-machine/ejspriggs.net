@@ -1,13 +1,13 @@
 {
-  "name": "hello-world-nodejs",
+  "name": "portfolio",
   "version": "1.0.0",
-  "description": "A simple Node.js hello world web app",
+  "description": "A portfolio of independent subprojects, each served under its own path",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js"
   },
-  "keywords": ["hello-world", "nodejs"],
+  "keywords": ["portfolio", "nodejs"],
   "author": "ejspriggs",
   "license": "MIT"
 }
