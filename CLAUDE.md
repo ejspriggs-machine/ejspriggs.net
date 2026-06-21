@@ -81,3 +81,13 @@ a token in a remote URL or script**):
 
 If credentials ever appear in plaintext in a transcript or a committed file, flag
 it — rotating these scoped creds is cheap and keeps the sandbox boundary intact.
+
+## Working agreement: permissions
+
+Read-only monitoring of things you're already cleared to do (`gh`, `git`, `aws`,
+`curl`, etc.) is in the allow-list and should run without asking. If a task needs
+a command or tool that is **not** in `.claude/settings.json`'s allow-list, do not
+silently work around it, skip it, or treat the block as a dead end — **tell the
+user what needs to be added and why**, so they can decide whether to expand the
+allow-list. The user wants to be informed of allow-list gaps, not have them
+routed around.
