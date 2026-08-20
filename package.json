@@ -9,5 +9,8 @@
   },
   "keywords": ["portfolio", "nodejs"],
   "author": "ejspriggs",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  }
 }
