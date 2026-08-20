@@ -1,0 +1,5 @@
+{
+  "title": "Bomb Game",
+  "description": "A PICO-8 game, playable in the browser. Built externally in PICO-8 and dropped in as successive web exports.",
+  "order": 3
+}

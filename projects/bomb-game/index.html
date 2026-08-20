@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bomb Game</title>
+  <!--
+    PICO-8 web-build container.
+
+    The playable build lives in ./game/ and is NOT committed by hand here —
+    it is dropped in as successive PICO-8 web exports. To deploy a build:
+      1. In PICO-8:  EXPORT INDEX.HTML
+      2. Copy the resulting  index.html  and  index.js  into
+         projects/bomb-game/game/   (overwriting the previous build)
+      3. Commit and push — the pipeline deploys it automatically.
+
+    This wrapper checks for game/index.html at load time: if present it embeds
+    the game in the iframe below; if not, it shows the "coming soon" state.
+    Nothing in this file needs to change between builds.
+  -->
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0; min-height: 100vh;
+      background: #0f172a; color: #e2e8f0;
+      display: flex; flex-direction: column;
+    }
+    header {
+      display: flex; align-items: center; gap: 16px;
+      padding: 20px 24px; border-bottom: 1px solid #1e293b;
+    }
+    header h1 { font-size: 1.4rem; margin: 0; }
+    .back { color: #38bdf8; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+    .back:hover { text-decoration: underline; }
+    main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; gap: 16px; }
+    .stage {
+      width: min(92vw, 560px); aspect-ratio: 1 / 1;
+      background: #000; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .stage iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .placeholder { text-align: center; color: #94a3b8; padding: 24px; }
+    .placeholder .big { font-size: 2rem; margin: 0 0 8px; }
+    .hint { color: #64748b; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back" href="/">&larr; Portfolio</a>
+    <h1>Bomb Game</h1>
+  </header>
+  <main>
+    <div id="stage" class="stage">
+      <div class="placeholder">
+        <p class="big">🕹️</p>
+        <p>The playable build lands here soon.</p>
+      </div>
+    </div>
+    <p class="hint" id="hint">Once loaded, click the game to give it keyboard focus.</p>
+  </main>
+  <script>
+    // Embed the game only if a build has been deployed; otherwise keep the
+    // "coming soon" placeholder. This makes the container safe to publish before
+    // the first export exists.
+    fetch('game/index.html', { cache: 'no-store' })
+      .then((r) => {
+        if (!r.ok) throw new Error('no build yet');
+        const stage = document.getElementById('stage');
+        stage.innerHTML = '';
+        const frame = document.createElement('iframe');
+        frame.src = 'game/index.html';
+        frame.title = 'Bomb Game';
+        frame.allow = 'autoplay; fullscreen; gamepad';
+        stage.appendChild(frame);
+      })
+      .catch(() => {
+        document.getElementById('hint').textContent = '';
+      });
+  </script>
+</body>
+</html>
