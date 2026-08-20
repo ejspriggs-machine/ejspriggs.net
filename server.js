@@ -89,6 +89,17 @@ const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   const pathname = decodeURIComponent(url.pathname);
 
+  // Origin verification: when ORIGIN_VERIFY_SECRET is set (an EB environment
+  // property, never committed), only serve requests carrying the matching header
+  // that CloudFront injects on every origin request. This blocks bots that hit
+  // the Elastic Beanstalk origin directly, bypassing the CDN. Fail-safe: with no
+  // secret configured, nothing is enforced. /api/health stays open so infra and
+  // uptime checks can reach the instance directly.
+  const originSecret = process.env.ORIGIN_VERIFY_SECRET;
+  if (originSecret && pathname !== '/api/health' && req.headers['x-origin-verify'] !== originSecret) {
+    return send(res, 403, 'Forbidden');
+  }
+
   // Shared backend resource: a tiny health endpoint every project can rely on,
   // and which doubles as proof the live backend + auto-deploy pipeline works.
   if (pathname === '/api/health') {
